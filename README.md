@@ -55,11 +55,11 @@ The presentation uses CSS custom properties for easy theming:
 
 ```css
 :root {
-  --bg: #f5f5f5;          /* Background color */
-  --panel: #ffffff;        /* Card background */
-  --text: #333333;        /* Text color */
-  --brand: #007bff;        /* Brand color */
-  --maxw: 1200px;         /* Max container width */
+  --bg: #f5f5f5; /* Background color */
+  --panel: #ffffff; /* Card background */
+  --text: #333333; /* Text color */
+  --brand: #007bff; /* Brand color */
+  --maxw: 1200px; /* Max container width */
 }
 ```
 
