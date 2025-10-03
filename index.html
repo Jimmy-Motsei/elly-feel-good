@@ -235,6 +235,7 @@
         border-radius: 12px;
         display: block;
         margin: 0 auto;
+        object-fit: contain;
       }
       /* Extra contrast for light strokes/text inside the SVG on dark background */
       .svg-contrast {
@@ -246,6 +247,15 @@
         font-size: 13px;
         color: var(--muted);
         margin-top: 8px;
+      }
+      
+      /* Specific styling for WhatsApp conversation screenshots */
+      .media img[alt*="WhatsApp"] {
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
       /* Footer */
