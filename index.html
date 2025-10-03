@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EllyFeelGood — AI Assistant Deck</title>
+    <meta
+      name="description"
+      content="EllyFeelGood: AI‑Powered Assistant pitch deck — clean single‑file HTML for Netlify hosting."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* --- Clean theme matching maru-briefing-forms: light, professional, card-based --- */
+      :root {
+        --bg: #f5f5f5; /* light background */
+        --panel: #ffffff; /* card surface */
+        --panel-2: #f0f0f0; /* alt surface */
+        --text: #333333; /* primary text */
+        --muted: #666666; /* secondary text */
+        --brand: #007bff; /* primary brand blue */
+        --brand-2: #0056b3; /* darker brand blue */
+        --danger: #dc3545;
+        --ok: #28a745;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --radius: 8px;
+        --radius-sm: 4px;
+        --maxw: 1200px;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+          Roboto, "Helvetica Neue", Arial, Noto Sans, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--text);
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      a {
+        color: var(--brand);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 32px 20px 80px;
+      }
+      header.site {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(8px);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.85)
+        );
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      header .bar {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        max-width: var(--maxw);
+        margin: 0 auto;
+        padding: 16px 20px;
+      }
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        box-shadow: var(--shadow);
+      }
+      .title {
+        font-size: 18px;
+        letter-spacing: 0.3px;
+        font-weight: 700;
+      }
+      .actions {
+        margin-left: auto;
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        background: var(--panel-2);
+        color: var(--text);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .btn:hover {
+        background: #e0e0e0;
+      }
+      .btn.primary {
+        background: var(--brand);
+        color: #ffffff;
+        font-weight: 700;
+        border: 1px solid var(--brand);
+      }
+      .btn.primary:hover {
+        background: var(--brand-2);
+        border-color: var(--brand-2);
+      }
+      .hint {
+        color: var(--muted);
+        font-size: 12px;
+        margin-left: 8px;
+      }
+
+      /* Slide system */
+      .slides {
+        margin-top: 26px;
+      }
+      section.slide {
+        position: relative;
+        background: var(--panel);
+        padding: 64px 28px 28px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin: 18px 0;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      section.slide::before {
+        content: "";
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        width: 96px;
+        height: 32px;
+        background: url("assets/new_maru_logo_neutral-960.png") no-repeat center /
+          contain;
+        opacity: 0.95;
+        pointer-events: none;
+      }
+      h1,
+      h2,
+      h3 {
+        margin: 0 0 12px;
+        line-height: 1.2;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+        font-weight: 600;
+      }
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      p {
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      ul {
+        padding-left: 18px;
+      }
+      li {
+        margin: 8px 0;
+        color: var(--text);
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .callout {
+        background: var(--panel-2);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        border-radius: var(--radius-sm);
+      }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 123, 255, 0.12);
+        border: 1px solid rgba(0, 123, 255, 0.35);
+        color: var(--brand);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      .kbd {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        background: #f8f9fa;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-size: 12px;
+        color: var(--text);
+      }
+
+      /* Media blocks */
+      .media {
+        background: var(--panel-2);
+        border: 1px dashed rgba(0, 0, 0, 0.2);
+        border-radius: var(--radius-sm);
+        padding: 14px;
+        text-align: center;
+      }
+      /* Ensure diagrams are crisp, readable, and not oversized */
+      .media img,
+      .media svg {
+        width: 100%;
+        height: auto;
+        max-height: 560px;
+        border-radius: 12px;
+        display: block;
+        margin: 0 auto;
+      }
+      /* Extra contrast for light strokes/text inside the SVG on dark background */
+      .svg-contrast {
+        /* Gentle outline and raise contrast */
+        filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.85))
+          drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
+      }
+      .caption {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        color: var(--muted);
+        margin: 30px 0 10px;
+        font-size: 12px;
+      }
+
+      /* Keyboard nav (progress bar) */
+      .progress {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .progress .bar {
+        height: 100%;
+        width: 0%;
+        background: var(--brand);
+        transition: width 0.25s ease;
+      }
+
+      @media (max-width: 860px) {
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 24px;
+        }
+        .media img,
+        .media svg {
+          max-height: 320px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site">
+      <div class="bar">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">EllyFeelGood — AI Assistant Deck</div>
+        <div class="actions">
+          <button
+            class="btn"
+            id="btnToggleMode"
+            title="Toggle reading/slides mode"
+          >
+            Toggle Mode
+          </button>
+          <button class="btn primary" id="btnPrint" title="Export / Print">
+            Export PDF
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <p class="hint">
+        Tip: Use <span class="kbd">←</span>/<span class="kbd">→</span> to move
+        slide‑by‑slide. Copy this file into your repo, push to GitHub, and
+        deploy on Netlify.
+      </p>
+
+      <div class="slides" id="slides" data-mode="slides">
+        <!-- Slide 1 -->
+        <section class="slide" data-slide>
+          <h1>
+            EllyFeelGood: AI‑Powered Assistant for Growth & Compassionate Care
+          </h1>
+          <p>
+            Delivering 24/7 customer support and guidance with empathy and
+            expertise.<br />Presented by: Maru Online — AI Automation
+          </p>
+        </section>
+
+        <!-- Slide 2 -->
+        <section class="slide" data-slide>
+          <h2>Executive Summary</h2>
+          <ul>
+            <li>
+              WhatsApp is a strong start, but replies depend on staff
+              availability and business hours.
+            </li>
+            <li>
+              The <strong>AI Assistant</strong> works alongside WhatsApp and
+              your website to guide customers, answer questions, book
+              appointments, and suggest the right products — any time.
+            </li>
+            <li>
+              Expect faster replies, more bookings, higher product sales, and
+              better retention through guided care journeys.
+            </li>
+            <li>
+              Built to be safe, empathetic, and ready to hand over to a real
+              person whenever needed.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 3 -->
+        <section class="slide" data-slide>
+          <h2>Why Move Beyond WhatsApp Alone</h2>
+          <div class="grid-2">
+            <div class="callout">
+              <h3>Current Challenges</h3>
+              <ul>
+                <li>
+                  Customers wait for replies after hours or during peak times.
+                </li>
+                <li>
+                  Staff repeat the same answers, causing inconsistency and
+                  fatigue.
+                </li>
+                <li>
+                  Details are not captured in an organized way for future care.
+                </li>
+                <li>Hard to measure and improve the experience.</li>
+              </ul>
+            </div>
+            <div class="callout">
+              <h3>How the AI Assistant Helps</h3>
+              <ul>
+                <li>Instant replies 24/7 with a consistent, caring tone.</li>
+                <li>
+                  Collects key details in an organized way for better
+                  follow‑ups.
+                </li>
+                <li>
+                  Guides customers to book, buy, or request a consultation.
+                </li>
+                <li>Frees staff from repetitive questions.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 4 -->
+        <section class="slide" data-slide>
+          <h2>Understanding the Customers We Serve</h2>
+          <ul>
+            <li>
+              <strong>Chemotherapy‑related hair loss:</strong> gentle guidance
+              and quick connection to a human specialist.
+            </li>
+            <li>
+              <strong>Alopecia / traction hair loss:</strong> clear self‑care
+              education, safe product suggestions, referrals when appropriate.
+            </li>
+            <li>
+              <strong>General growth & maintenance:</strong> routine guidance,
+              product pairings, education.
+            </li>
+            <li>
+              <strong>Loyal buyers:</strong> personalized reminders,
+              subscriptions, ongoing encouragement.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 5 -->
+        <section class="slide" data-slide>
+          <h2>Safety, Empathy, and Privacy</h2>
+          <ul>
+            <li>
+              Customer data handled according to <strong>POPIA</strong> (South
+              African privacy law): clear opt‑in, minimised data, and deletion
+              on request.
+            </li>
+            <li>
+              No diagnosis or prescriptions; sensitive cases escalate to a human
+              expert.
+            </li>
+            <li>Compassionate, respectful language throughout.</li>
+            <li>Conversation logs enable quality checks and transparency.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 6 -->
+        <section class="slide" data-slide>
+          <h2>How the Experience Works</h2>
+          <div class="media">
+            <img
+              src="assets/how-the-experience-works.svg"
+              alt="How the experience works — entry, consent, intake, guidance, actions, and follow-ups"
+              loading="lazy"
+              class="svg-contrast"
+            />
+            <div class="caption">
+              How the experience flows from entry → consent → intake → guidance
+              → actions → follow-ups.
+            </div>
+          </div>
+          <ul>
+            <li>Entry via WhatsApp, website chat, or QR code.</li>
+            <li>Warm welcome, clear purpose, and consent.</li>
+            <li>Friendly questions about goals, concerns, and preferences.</li>
+            <li>Pathways: chemo‑care • other hair loss • general care.</li>
+            <li>
+              Guidance, product suggestions, and easy actions (book or buy).
+            </li>
+            <li>Follow‑ups for progress checks, reminders, and support.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 7 -->
+        <section class="slide" data-slide>
+          <h2>Seamless Human Collaboration</h2>
+          <ul>
+            <li>
+              Start with the AI Assistant; handover to a human in the same
+              WhatsApp thread when needed.
+            </li>
+            <li>
+              Staff see the full conversation history, so customers never repeat
+              themselves.
+            </li>
+            <li>
+              Appointments sync to your calendar with automatic reminders.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 8 -->
+        <section class="slide" data-slide>
+          <h2>What the Assistant Does for EllyFeelGood</h2>
+          <ul>
+            <li>Warm greeting and brief, friendly questions.</li>
+            <li>Qualifies and schedules consultations.</li>
+            <li>Suggests product bundles or items based on needs.</li>
+            <li>Provides after‑purchase guidance for correct product use.</li>
+            <li>Sends caring follow‑ups and refill reminders.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 9 -->
+        <section class="slide" data-slide>
+          <h2>How It Fits with Your Business</h2>
+          <ul>
+            <li>Works with WhatsApp and your website (Instagram later).</li>
+            <li>All interactions connected to your customer records.</li>
+            <li>
+              Supports bookings and payment links to complete actions quickly.
+            </li>
+            <li>Strong privacy and security controls.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 10 -->
+        <section class="slide" data-slide>
+          <h2>Clear and Caring Communication</h2>
+          <ul>
+            <li>
+              <strong>Chemotherapy context:</strong> slower, supportive
+              conversation; quick human connection when needed.
+            </li>
+            <li>
+              <strong>Alopecia / traction:</strong> education on safe practices;
+              guidance for consistent care.
+            </li>
+            <li>
+              <strong>Growth & maintenance:</strong> daily routines, do’s &
+              don’ts, lifestyle tips.
+            </li>
+            <li>
+              <strong>Service recovery:</strong> sincere apologies, solutions,
+              and staff escalation.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 11 -->
+        <section class="slide" data-slide>
+          <h2>Measuring Success</h2>
+          <ul>
+            <li>How quickly customers get their first response.</li>
+            <li>Bookings made compared to today.</li>
+            <li>
+              How often customers accept suggested bundles or return for
+              refills.
+            </li>
+            <li>Customer satisfaction and care sentiment.</li>
+            <li>Hours saved by staff on repetitive questions.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 12 -->
+        <section class="slide" data-slide>
+          <h2>Return on Investment</h2>
+          <ul>
+            <li>
+              Baseline today: inquiries, bookings, average order value, repeat
+              rate.
+            </li>
+            <li>24/7 responses → more consultations booked.</li>
+            <li>Relevant suggestions → higher order value.</li>
+            <li>Thoughtful follow‑ups → stronger retention and loyalty.</li>
+            <li>Handling common questions → staff time saved.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 13 -->
+        <section class="slide" data-slide>
+          <h2>Implementation Roadmap</h2>
+          <div class="grid-2">
+            <div class="callout">
+              <h3>First 30 Days (Pilot)</h3>
+              <ul>
+                <li>Import FAQs and product details.</li>
+                <li>Craft warm, empathetic responses.</li>
+                <li>Launch on the website for limited guidance.</li>
+                <li>Track interactions and feedback.</li>
+              </ul>
+            </div>
+            <div class="callout">
+              <h3>Next 30 Days (Scale Up)</h3>
+              <ul>
+                <li>Enable WhatsApp experience.</li>
+                <li>Integrate bookings and payment links.</li>
+                <li>Train the Assistant in chemo‑care conversation style.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout" style="margin-top: 14px">
+            <h3>Next 30 Days (Refine & Grow)</h3>
+            <ul>
+              <li>Test message styles and personalize bundles.</li>
+              <li>Set up dashboards for results.</li>
+              <li>Coach staff on best practices.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Slide 14 -->
+        <section class="slide" data-slide>
+          <h2>Potential Concerns & How We Address Them</h2>
+          <ul>
+            <li>
+              <strong>Medical accuracy:</strong> no diagnosis; escalate complex
+              cases to humans.
+            </li>
+            <li>
+              <strong>Tone sensitivity:</strong> curated templates and regular
+              reviews.
+            </li>
+            <li>
+              <strong>Data privacy:</strong> POPIA compliance and secure
+              handling.
+            </li>
+            <li>
+              <strong>Adoption:</strong> QR codes, website entry, packaging
+              prompts.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 15 -->
+        <section class="slide" data-slide>
+          <h2>Pricing Approach (Illustrative)</h2>
+          <ul>
+            <li>
+              <strong>Pilot:</strong> short setup, core features, reporting.
+            </li>
+            <li>
+              <strong>Growth Plan:</strong> WhatsApp, bookings, payments,
+              ongoing support.
+            </li>
+            <li>
+              <strong>Full Service:</strong> personalization, loyalty, advanced
+              reporting, continuous optimization.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Slide 16 -->
+        <section class="slide" data-slide>
+          <h2>What We Need from EllyFeelGood</h2>
+          <ul>
+            <li>Product list with descriptions and safety notes.</li>
+            <li>Brand tone and disclaimers that reflect Elly’s voice.</li>
+            <li>Calendar access for booking and staff escalation contacts.</li>
+            <li>Payment link provider or preferred method.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 17 (Before) -->
+        <section class="slide" data-slide>
+          <h2>Before Snapshot: Current WhatsApp Experience</h2>
+          <div class="media">
+            <img
+              src="assets/current-whatsapp-experience.png"
+              alt="WhatsApp conversation — current experience (before snapshot)"
+              loading="lazy"
+            />
+            <div class="caption">
+              Actual WhatsApp conversation (before snapshot).
+            </div>
+          </div>
+          <h3 style="margin-top: 14px">Key Challenges</h3>
+          <ul>
+            <li>Delays outside business hours lead to drop‑offs.</li>
+            <li>
+              Repetitive questions create inconsistency and staff fatigue.
+            </li>
+            <li>Details aren’t stored in an organized way for future care.</li>
+            <li>Some customers leave before they get help.</li>
+          </ul>
+        </section>
+
+        <!-- Slide 18 (After) -->
+        <section class="slide" data-slide>
+          <h2>After Snapshot: AI Assistant Solution</h2>
+          <div class="media">
+            <img
+              src="assets/01-solution-global-map.svg"
+              alt="AI Assistant solution overview map"
+              loading="lazy"
+              style="
+                max-width: 100%;
+                height: auto;
+                border-radius: 12px;
+                display: block;
+                margin: auto;
+              "
+            />
+            <div class="caption">AI Assistant solution overview map.</div>
+          </div>
+          <h3 style="margin-top: 14px">What Improves</h3>
+          <ul>
+            <li>
+              <strong>Instant, always‑available support</strong> at any time of
+              day.
+            </li>
+            <li>
+              <strong>Guided conversations</strong> that understand each
+              customer’s needs.
+            </li>
+            <li>
+              <strong>Easy actions</strong>: book consultations, find products,
+              receive payment links.
+            </li>
+            <li>
+              <strong>Organized information</strong> for personal, efficient
+              follow‑ups.
+            </li>
+            <li>
+              <strong>Seamless handoff</strong> to a real team member when
+              needed.
+            </li>
+            <li>
+              <strong>Compassionate experience</strong>, especially for
+              customers recovering from chemotherapy.
+            </li>
+          </ul>
+        </section>
+
+        <!-- Appendix (examples) -->
+        <section class="slide" data-slide>
+          <h2>Appendix — Example Welcome Message</h2>
+          <p>
+            “Hello and welcome to EllyFeelGood. We understand how important your
+            hair journey is. May I ask a few gentle questions so I can guide you
+            to the right support? You can stop anytime you like.”
+          </p>
+        </section>
+
+        <section class="slide" data-slide>
+          <h2>Appendix — Example Follow‑Up Message</h2>
+          <p>
+            “Hi again! We hope you're doing well with your new hair care
+            routine. Would you like to book a quick check‑in or refill your
+            products?”
+          </p>
+        </section>
+
+        <!-- Penultimate: Next Steps -->
+        <section class="slide" data-slide>
+          <h2>Next Steps</h2>
+          <ul>
+            <li>Approve pilot scope and the data‑sharing agreement.</li>
+            <li>Short workshop to finalize flows and safeguards.</li>
+            <li>Launch pilot in ~30 days with weekly progress reviews.</li>
+          </ul>
+        </section>
+
+        <!-- Final: Thank You -->
+        <section class="slide" data-slide>
+          <h2>Thank You</h2>
+          <p>
+            We appreciate the opportunity to support EllyFeelGood’s mission. If
+            you’d like, we can set up a short discovery call to tailor the AI
+            Assistant to your care philosophy and brand voice.
+          </p>
+          <div class="callout">
+            <p>
+              <strong>Contact:</strong> Maru Online — AI Automation<br />
+              <span class="muted">hello@maruonline.com • maruonline.com</span>
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <footer>© Maru Online — Pitch Deck for EllyFeelGood</footer>
+    </div>
+
+    <div class="progress"><div class="bar" id="progressBar"></div></div>
+
+    <script>
+      // Simple slide navigation + print
+      (function () {
+        const slides = Array.from(document.querySelectorAll("[data-slide]"));
+        const progressBar = document.getElementById("progressBar");
+        const elSlides = document.getElementById("slides");
+        const btnPrint = document.getElementById("btnPrint");
+        const btnToggleMode = document.getElementById("btnToggleMode");
+
+        function indexFromHash() {
+          const h = location.hash.replace("#", "");
+          const i = parseInt(h, 10);
+          return isNaN(i) ? 0 : Math.max(0, Math.min(slides.length - 1, i));
+        }
+        function goto(i) {
+          const el = slides[i];
+          if (!el) return;
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          location.hash = i;
+          const pct = ((i + 1) / slides.length) * 100;
+          progressBar.style.width = pct + "%";
+        }
+        function currentIndex() {
+          return indexFromHash();
+        }
+
+        document.addEventListener("keydown", (e) => {
+          const i = currentIndex();
+          if (e.key === "ArrowRight" || e.key === "PageDown") {
+            e.preventDefault();
+            goto(Math.min(i + 1, slides.length - 1));
+          }
+          if (e.key === "ArrowLeft" || e.key === "PageUp") {
+            e.preventDefault();
+            goto(Math.max(i - 1, 0));
+          }
+          if (e.key === "Home") {
+            e.preventDefault();
+            goto(0);
+          }
+          if (e.key === "End") {
+            e.preventDefault();
+            goto(slides.length - 1);
+          }
+        });
+
+        window.addEventListener("hashchange", () => {
+          goto(indexFromHash());
+        });
+        window.addEventListener("load", () => {
+          goto(indexFromHash());
+        });
+
+        btnPrint.addEventListener("click", () => window.print());
+        btnToggleMode.addEventListener("click", () => {
+          const mode = elSlides.getAttribute("data-mode");
+          const next = mode === "slides" ? "reading" : "slides";
+          elSlides.setAttribute("data-mode", next);
+          document.body.style.scrollBehavior =
+            next === "slides" ? "smooth" : "auto";
+          btnToggleMode.textContent =
+            next === "slides" ? "Reading Mode" : "Slides Mode";
+        });
+      })();
+    </script>
+  </body>
+</html>
